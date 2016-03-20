@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"ng-app="reminder">
+<head>
+	<meta charset="UTF-8">
+	<title>tixingshixiang</title>
+	<link rel="stylesheet" href="css/index.css">
+	<script src="js/angular.js"></script>
+	<script src="js/index.js"></script>
+</head>
+<body ng-controller="rdCtrl"ng-dblclick="clear()">
+	<div class="left">
+		<div class="top">
+			<span class="icloudimg"></span>
+			<span class="tiword">提醒事项</span>
+			<span class="add"ng-click="addshi()"ng-dblclick="zz($event)"></span>
+		</div>
+
+		<div class="top">
+			<span class="clock"></span>
+			<span class="tiword">已计划</span>
+		</div>
+		<ul>
+			<li ng-repeat="value in shijianliebiao track by $index"ng-click="showshijian($index)"ng-class="{active:clistindex==$index}">
+				<span ng-class="value.color"></span>
+				<input type="text"ng-model="value.name"ng-blur="save()">
+				<span class="shape"></span>
+			</li>
+		</ul>
+	</div>
+	<div class="right"ng-class="shijianliebiao[clistindex].color">
+		<!-- 
+		<hr>
+		
+			
+		 -->
+		 <div class="rightview">
+				<div class="view-left">
+					<div class="search"></div>
+					<p>
+					   <input type="text"ng-model="key"id="tixing">
+					   <div id="tiContent">{{tixing}}</div>
+					</p>
+					
+				</div>
+				<div class="view-right">
+					<label for="">姓名</label>
+					<div class="xiala"></div>
+					<div class="fenge"></div>
+					<div class="help-icon"></div>
+				</div>
+		</div>
+	    <div ng-show="key">
+			 
+			<h1>这是{{key}}搜索结果页</h1>
+			<dl ng-repeat="value in shijianliebiao|search:key">
+				<dt>{{value.name}}</dt>
+				<dd ng-repeat="r in value.items">{{r.name}}</dd>
+			</dl>
+		</div>
+		<div ng-hide="key">
+			<div class="right-content">
+			    <div class="right-items">
+
+					<div id="options-detail" class="options-detail show" ng-class="{'show':isshow,'hide':!isshow}"style="display:none">
+	                     <div class="container">
+	                      <input type="text" class="i-name ng-pristine ng-untouched ng-valid" ng-model="shijianliebiao[clistindex].name" value="新列表 2">
+                         <p class="color-list">列表颜色</p>
+                          <ul class="clearfix"id="xuanxiang">
+	                      <!-- ngRepeat: color in colors -->
+	                          <li ng-repeat="color in colors" ng-click="shijianliebiao[clistindex].color=color" ng-class="value.color"class=" {{color}}">
+		                           <span id="yuandian "></span>
+	                          </li>
+                          </ul>
+					    <span ng-click="deleteitem()" class="op-delete">删除</span>
+					    <span ng-click="cancle()" class="op-cancle">取消</span>
+					    <span ng-click="save()" class="op-done">完成</span>
+					  </div>
+					</div>
+
+
+					
+					<div class="title">
+						<p class="items-title">{{shijianliebiao[clistindex].name}}</p>
+		
+						<p class="choose">选项</p>
+		
+					</div>
+					<div class="done-item">已完成：
+						<span ng-bind="countDone()">{{countDone()}}</span>
+						<span></span>
+						项
+					</div>
+					<ul class="">
+						<li class=" {{shijianliebiao[clistindex].color}}"ng-repeat="(key, value) in shijianliebiao[clistindex].items track by $index"ng-class="{'item-active':value==currenttodo}"ng-click="setcurrenttodo(value)"ng-show="value.isDone">
+							<span></span>
+		
+						     <span ></span>
+							<span ng-click=""ng-show="value.isDone=true;save()">{{value.name}}</span>
+							<input type="text"ng-model="value.name"ng-blur="save()"value="value.name">
+							<button ng-click="deletetodo($index)">删除</button>
+						</li>
+					</ul>
+					<!-- <div class="done-item">未完成：
+						<span>{{shijianliebiao[clistindex].items.length-countDone()}}</span>
+						<span></span>
+						项
+					</div> -->
+					<!-- <ul>
+						<li ng-repeat="(key, value) in shijianliebiao[clistindex].items track by $index "ng-hide="value.isDone">
+							<span></span>
+							<span>{{value.isDone}}</span>
+							<span ng-click=""ng-hide="value.isDone=true;save()">{{value.name}}</span> 
+							<input type="text"ng-model="value.name"ng-blur="save()">
+							<button ng-click="deletetodo($index)">删除</button>
+						</li>
+						<li></li>
+					</ul> -->
+		
+					<div class="new-item {{shijianliebiao[clistindex].color}} new"ng-click="addtodo()">新项目...</div>
+				</div>
+			</div>
+		</div> 
+	</div>
+</body>
+
+</html>
